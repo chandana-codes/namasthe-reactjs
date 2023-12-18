@@ -21,7 +21,7 @@ export default resList = [
       areaName: "Ejipura",
       costForTwo: "₹400 for two",
       cuisines: ["Burgers", "Biryani", "American", "Snacks", "Fast Food"],
-      avgRating: 4.2,
+      avgRating: 3.8,
       deliveryTime: 17,
     },
   },
