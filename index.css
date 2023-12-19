@@ -23,6 +23,11 @@
   margin: 10px;
 }
 
+.logIn{
+  padding: 0 20px;
+  cursor: pointer;
+}
+
 .search{
   padding: 10px;
 }
