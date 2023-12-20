@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 
 export default Body = () => {
   const [listOfRestaurants, setListOfRestaurant] = useState([]);
+  const [filteredRestaurant, setFilteredRestaurant] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  // const [showTopRated, setShowTopRated] = useState(false); // avg. rating >= 4.3
 
   useEffect(() => {
     fetchData();
@@ -20,29 +23,64 @@ export default Body = () => {
     const restaurants =
       json.data.cards[2].card.card.gridElements.infoWithStyle.restaurants ?? [];
     setListOfRestaurant(restaurants);
+    setFilteredRestaurant(restaurants);
+  };
+
+  const filterBySearchQuery = (restaurants) => {
+    return restaurants.filter(
+      (restaurant) =>
+        restaurant.info.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        restaurant.info.cuisines
+          .join(", ")
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+    );
+  };
+
+  const filterByTopRated = (restaurants) => {
+    return restaurants.filter((res) => res.info.avgRating >= 4);
   };
 
   //Conditional Rendering
+  // console.log("listOfRestaurants", listOfRestaurants);
+  // console.log("filteredRestaurants", filteredRestaurant);
 
   return listOfRestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="searchBox"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              const searchFilteredRestaurant =
+                filterBySearchQuery(listOfRestaurants);
+              setFilteredRestaurant(searchFilteredRestaurant);
+            }}
+          >
+            Search
+          </button>
+        </div>
         <button
           className="filter-btn"
           onClick={() => {
-            const filteredList = listOfRestaurants.filter(
-              (res) => res.info.avgRating > 4
-            );
-            setListOfRestaurant(filteredList);
+            const filteredList = filterByTopRated(listOfRestaurants);
+            setFilteredRestaurant(filteredList);
           }}
         >
           Top Rated Restaurant
         </button>
       </div>
       <div className="resContainer">
-        {listOfRestaurants.map((restaurant) => (
+        {filteredRestaurant.map((restaurant) => (
           <RestaurantCard key={restaurant.info.id} resData={restaurant} />
         ))}
       </div>
