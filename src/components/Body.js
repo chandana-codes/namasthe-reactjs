@@ -21,7 +21,7 @@ export default Body = () => {
 
     // console.log(json);
     const restaurants =
-      json.data.cards[2].card.card.gridElements.infoWithStyle.restaurants ?? [];
+      json.data.cards[5].card.card.gridElements.infoWithStyle.restaurants ?? [];
     setListOfRestaurant(restaurants);
     setFilteredRestaurant(restaurants);
   };
