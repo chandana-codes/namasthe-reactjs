@@ -8,6 +8,8 @@ export default Body = () => {
   const [searchText, setSearchText] = useState("");
   // const [showTopRated, setShowTopRated] = useState(false); // avg. rating >= 4.3
 
+  console.log("Body Rendered");
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -21,7 +23,7 @@ export default Body = () => {
 
     // console.log(json);
     const restaurants =
-      json.data.cards[5].card.card.gridElements.infoWithStyle.restaurants ?? [];
+      json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants ?? [];
     setListOfRestaurant(restaurants);
     setFilteredRestaurant(restaurants);
   };
